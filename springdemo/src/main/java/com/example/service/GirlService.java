@@ -1,9 +1,12 @@
-package com.example.demo;
+package com.example.service;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.domain.Girl;
+import com.example.properties.GirlRepository;
 
 @Service
 public class GirlService {

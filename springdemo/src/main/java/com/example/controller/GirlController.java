@@ -1,10 +1,12 @@
-package com.example.demo;
+package com.example.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.xml.ws.RequestWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.domain.Girl;
+import com.example.properties.GirlRepository;
+import com.example.service.GirlService;
 
 @RestController
 public class GirlController {
@@ -34,11 +40,13 @@ public class GirlController {
 	 * 增加一个女生
 	 */
 	@PostMapping(value = "/girls")
-	public Girl girlAdd(@RequestParam("cupSize") String cupSize,
-			@RequestParam("age") Integer age) {
-		Girl girl = new Girl();
-		girl.setCupSize(cupSize);
-		girl.setAge(age);
+	public Girl girlAdd(@Valid Girl girl,BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getFieldError().getDefaultMessage());
+			return null;
+		}
+		girl.setCupSize(girl.getCupSize());
+		girl.setAge(girl.getAge());
 		return girlRepository.save(girl);
 	}
 	/**

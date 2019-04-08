@@ -1,8 +1,9 @@
-package com.example.demo;
+package com.example.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 
 @Entity
 public class Girl {
@@ -11,11 +12,8 @@ public class Girl {
 	@GeneratedValue
 	private int id;
 	private String cupSize;
+	@Min(value=18,message="未成年喔~")
 	private int age;
-	
-	Girl(){
-		
-	}
 	
 	public String getCupSize() {
 		return cupSize;
