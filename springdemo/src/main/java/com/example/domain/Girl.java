@@ -12,7 +12,7 @@ public class Girl {
 	@GeneratedValue
 	private int id;
 	private String cupSize;
-	@Min(value=18,message="未成年喔~")
+	@Min(value=1,message="未成年喔~")
 	private int age;
 	
 	public String getCupSize() {
@@ -34,6 +34,10 @@ public class Girl {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	@Override
+	public String toString() {
+		return "Girl [id=" + id + ", cupSize=" + cupSize + ", age=" + age + "]";
 	}
 	
 }

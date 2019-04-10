@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.Girl;
+import com.example.domain.Result;
 import com.example.properties.GirlRepository;
 import com.example.service.GirlService;
+import com.example.utils.ResultUtil;
 
 @RestController
 public class GirlController {
@@ -40,14 +42,13 @@ public class GirlController {
 	 * 增加一个女生
 	 */
 	@PostMapping(value = "/girls")
-	public Girl girlAdd(@Valid Girl girl,BindingResult bindingResult) {
+	public Result<Girl> girlAdd(@Valid Girl girl,BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult.getFieldError().getDefaultMessage());
-			return null;
+			return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
 		}
 		girl.setCupSize(girl.getCupSize());
 		girl.setAge(girl.getAge());
-		return girlRepository.save(girl);
+		return ResultUtil.success(girlRepository.save(girl));
 	}
 	/**
 	 * 根据id查询女生
@@ -97,4 +98,14 @@ public class GirlController {
 	public void girlAll() {
 		girlService.insertTwo();
 	}
+	
+	/**
+	 * 通过ID查询女生
+	 * @param id
+	 * @throws Exception
+	 */
+	@GetMapping(value = "girls/getAge/{id}")
+    public void getAge(@PathVariable("id") Integer id) throws Exception{
+        girlService.getAge(id);
+    }
 }
